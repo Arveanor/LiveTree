@@ -1,7 +1,7 @@
 
 $(document).ready(function(){
     //connect to the socket server.
-    var socket = io.connect('http://' + document.domain + ':' + location.port + '/test');
+    var socket = io.connect('https://' + document.domain + ':' + location.port + '/test');
     var leaves = [{}]; // leafId
 
     //receive details from server
