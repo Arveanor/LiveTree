@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+	<h1>Live Tree View</h1>
+	{% if factories %}
+		{% for f in factories %}
+			<table id = "ftable{{ f.id }}">
+				<tr>
+					<td width="160px">
+						{{ f.name }} ({{ f.low_val }}:{{ f.high_val }}) | <a href="{{ url_for('modify', factoryName=f.name) }}">Modify</a>
+					</td>
+					<td width="160px">
+						<span id="gen{{ f.id }}">
+							{{ wtf.quick_form(genForms[f.id]) }}
+						</span>
+					</td>
+					<!--<td width = "120px">
+						<a href="javascript:generate('{{ f.id }}', 'gen{{ f.id }}');">Generate</a>
+					</td> -->
+					<td width="120px">
+						{{ wtf.quick_form(delForms[f.id]) }}
+					</td>
+				</tr>
+				{% for leaf in f.leaves.all() %}
+				<tr id="leafrow{{ leaf.id }}">
+					<td>
+						<span id="leaf{{ leaf.id }}">
+							{{ leaf }}
+						</span>
+					</td>
+				</tr>
+				{% endfor %}
+			</table>
+
+		{% endfor %}
+	{% endif %}
+
+	<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+	<script src="static/js/application.js"></script>
+	<script>
+		function generate(factoryId, numLeaves) {
+		    console.log(numLeaves)
+		    children = document.getElementById(numLeaves).childNodes;
+		    console.log(children[1])
+		    if(numLeaves > 15)
+		    {
+		    	numLeaves = 15;
+		    }
+		    if(numLeaves < 1) 
+		    {
+		    	numLeaves = 1;
+		    }
+		    var socket = io.connect('http://' + document.domain + ':' + location.port + '/generate');
+
+		    socket.emit('gen_event', {factory: factoryId});
+		}
+	</script>
+{% endblock %}

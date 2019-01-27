@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+	{% if factory %}
+		<h1>Modify: {{ factory.name }}</h1>
+	{{ wtf.quick_form(form) }}
+	{% else %}
+		<h1>Modify Failure</h1>
+		<p>Unable to find factory with name "{{ fname }}" for modification</p>
+		<p><a href="{{ url_for('index') }}">Return to home page</a></p>
+	{% endif %}
+{% endblock %}
