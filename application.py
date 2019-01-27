@@ -106,7 +106,7 @@ class GenerateLeavesForm(FlaskForm):
 	numLeaves = IntegerField("Number of Leaves", validators=[DataRequired()])
 	generate = SubmitField('Generate')
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
 	factories = Factory.query.all()
