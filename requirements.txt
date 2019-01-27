@@ -25,4 +25,4 @@ WTForms==2.2.1
 
 #Heroku dependencies
 psycopg2==2.7.3.1
-gunicorn==18.0.0
+gunicorn==19.9.0
