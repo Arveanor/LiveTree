@@ -1,1 +1,1 @@
-web: flask db upgrade; gunicorn -k eventlet application:app
+web: flask db upgrade; gunicorn application:app
